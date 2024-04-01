@@ -1,0 +1,6 @@
+indexPage(): Both
+addWordOccurance(); Both
+printTrieContents(): Bennet
+freeTrieContents(): Ethan
+
+9 Hours Total
