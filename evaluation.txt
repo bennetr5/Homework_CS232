@@ -1,6 +1,0 @@
-indexPage(): Both
-addWordOccurance(); Both
-printTrieContents(): Bennet
-freeTrieContents(): Ethan
-
-5 Hours Total

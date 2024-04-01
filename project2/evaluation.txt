@@ -3,4 +3,4 @@ addWordOccurance(); Both
 printTrieContents(): Bennet
 freeTrieContents(): Ethan
 
-12 Hours Total
+5 Hours Total
