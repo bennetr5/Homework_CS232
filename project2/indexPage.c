@@ -28,7 +28,7 @@ struct trieNode* indexPage(char* url, int strSize);
 
 void addWordOccurrence(const char* word, struct trieNode* root, int wordLength);
 
-void printTrieContents(struct trieNode* root, char* buffer, int depth, const char* url, int* urlPrinted);
+void printTrieContents(struct trieNode* root, char* buffer, int depth);
 
 int freeTrieMemory(struct trieNode *root);
 
@@ -51,12 +51,11 @@ int main(int argc, char* argv[]) {
 
   char pageStr[BUFFER + 1];
   int strSize = getText(url, pageStr, BUFFER);
-  int urlPrinted = 0;
-
+  printf("%s\n", url);
   
   struct trieNode *pageTrie = indexPage(pageStr, strSize);
 
-  printTrieContents(pageTrie, pageStr, 0, url, &urlPrinted);
+  printTrieContents(pageTrie, pageStr, 0);
   freeTrieMemory(pageTrie);
 
   return 0;
@@ -87,12 +86,14 @@ struct trieNode * indexPage(char* url, int strSize) {
                 word[wordLen++] = tolower(url[i]);
             } else {
                 word[BUFFER - 1] = '\0'; 
+                printf("\t%s\n", word);
                 addWordOccurrence(word, rootNode, wordLen);
                 wordLen = 0; 
             }
         } else {
             if (wordLen > 0) {
                 word[wordLen] = '\0';
+                printf("\t%s\n", word);
                 addWordOccurrence(word, rootNode, wordLen);
                 wordLen = 0; 
             }
@@ -102,6 +103,7 @@ struct trieNode * indexPage(char* url, int strSize) {
 
     if (wordLen > 0) {
         word[wordLen] = '\0';
+        printf("\t%s\n", word);
         addWordOccurrence(word, rootNode, wordLen);
     }
 
@@ -135,24 +137,19 @@ void addWordOccurrence(const char* word, struct trieNode* root, int wordLength) 
 }
 
 
-void printTrieContents(struct trieNode* root, char* buffer, int depth, const char* url, int* urlPrinted) {
+void printTrieContents(struct trieNode* root, char* buffer, int depth) {
     if (root == NULL) {
         return;
     }
 
     if (root->count > 0 && depth > 0) {
-        buffer[depth] = '\0';
-        if (!(*urlPrinted)) {
-            printf("%s\n", url);
-            *urlPrinted = 1;
-        }
-        
+        buffer[depth] = '\0';  
         printf("%s: %d\n", buffer, root->count);
     }
 
     for (int i = 0; i < root->numOfChildren; i++) {
         buffer[depth] = root->child[i]->letter;
-        printTrieContents(root->child[i], buffer, depth + 1, url, urlPrinted);
+        printTrieContents(root->child[i], buffer, depth + 1);
     }
 }
 
@@ -177,6 +174,7 @@ struct trieNode* createTrieNode() {
   }
 
   node->numOfChildren = 0;
+  node->count = 0;
   for (int i = 0; i < MAX_LEN; i++) {
     node->child[i] = NULL;
   }
