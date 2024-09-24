@@ -1,6 +1,6 @@
 # Homework_CS232
 
-HW3: Read code segments and determine the password to move on to the next.
+HW4: Read code segments and determine the password to move on to the next.
 
 Project 1: Created a web crawler that stores addresses in a binary tree. * getLink() was already provided.
 
